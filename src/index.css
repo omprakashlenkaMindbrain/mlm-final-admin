@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+
+
+/* ===== Global Theme Colors ===== */
+:root {
+  --color-primary: #1F4E79;   /* Deep blue */
+  --color-secondary: #2AB57D; /* Green */
+  --color-accent: #FDB913;    /* Yellow accent */
+  --color-bg: #F8FAFC;        /* Light gray background */
+  --color-text-dark: #1E293B; /* Slate */
+  --color-text-light: #FFFFFF;
+  --bmpl-blue: #254db0;   /* BMPL Blue: logo text, big arrow */
+  --bmpl-gold: #ffb74d;   /* BMPL Gold: shopping bag, arrow */
+  --bmpl-green: #35b582;  /* BMPL Green: arrow */
+  --bmpl-teal: #2e8ab8;   /* BMPL Teal: smallest arrow */
+  --bmpl-slate: #314363; 
+}
+
+/* ===== Global Gradient Helper ===== */
+.bg-theme-gradient {
+  background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+}
+
+/* ===== Global Card/Container Styling ===== */
+.theme-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+}
+
+/* ===== Global Button Styles ===== */
+.btn-primary {
+  @apply text-white font-semibold px-4 py-2 rounded-full transition;
+  background-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-secondary);
+}
+
+.btn-accent {
+  @apply font-semibold px-4 py-2 rounded-full transition;
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+}
+
+.btn-accent:hover {
+  background-color: white;
+  color: var(--color-primary);
+}
+
+
+/* :root {
+  --bmpl-blue: #254db0;   /* BMPL Blue: logo text, big arrow */
+  /* --bmpl-gold: #ffb74d;   BMPL Gold: shopping bag, arrow */
+  /* --bmpl-green: #35b582;  BMPL Green: arrow */
+  /* --bmpl-teal: #2e8ab8;   /* BMPL Teal: smallest arrow */
+  /* --bmpl-slate: #314363;  BMPL Slate: base text */ 
+/* } */
+
+/* Example global background for app */
+/* body {
+  background: linear-gradient(135deg, #f6fbff 0%, #eaf7fd 100%);
+} */ 
