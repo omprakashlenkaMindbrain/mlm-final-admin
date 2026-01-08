@@ -13,16 +13,13 @@ export const useGenerateIncome = () => {
     try {
       const res = await fetch(`${BASE_URL}/api/admin/genincome`, {
         method: "POST",
-        credentials:"include",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
       });
 
       const json = await res.json();
-
-      console.log(json);
-      
 
       if (!res.ok || !json.success) {
         throw new Error(json.message || "Failed to generate income");

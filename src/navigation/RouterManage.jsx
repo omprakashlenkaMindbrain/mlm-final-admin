@@ -22,24 +22,26 @@ function Layout() {
   const showNavbar = !hideNavRoute.includes(location.pathname);
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 overflow-hidden">
+      {/* Sidebar */}
       {showNavbar && (
         <ProtectedRoute>
-          <Navbar />
+          <Navbar className="fixed top-0 left-0 h-full w-64 z-50" />
         </ProtectedRoute>
       )}
 
+      {/* Main content */}
       <main
         className={`
           flex-1 transition-all duration-300
           ${showNavbar ? "md:ml-64" : ""}
-          ${showNavbar ? "mt-16 md:mt-0" : ""}
           p-4 md:p-6
+          overflow-auto
         `}
       >
         <div className="max-w-7xl mx-auto w-full">
           <Routes>
-            {/* ✅ FIX: redirect /admin → dashboard */}
+            {/* Redirect /admin → dashboard */}
             <Route path="/admin" element={<Navigate to="/" replace />} />
 
             <Route
@@ -87,7 +89,7 @@ function Layout() {
               }
             />
 
-            {/* ✅ SINGLE login route */}
+            {/* Single login route */}
             <Route path="/admin/login" element={<AdminLoginPage />} />
           </Routes>
         </div>

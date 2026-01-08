@@ -30,7 +30,6 @@ const AccountDetails = () => {
         });
         const data = await res.json();
 
-        console.log(data);
 
 
         if (data?.data && data.data.length > 0) {
@@ -66,7 +65,7 @@ const AccountDetails = () => {
       account_no: formData.accountNumber,
       ifsc_code: formData.ifscCode,
       accountholder_name: formData.accountHolderName,
-      bankname: formData.bankName, // ✅ CORRECT
+      bankname: formData.bankName,
     };
 
 
@@ -98,7 +97,7 @@ const AccountDetails = () => {
       account_no: formData.accountNumber,
       ifsc_code: formData.ifscCode,
       accountholder_name: formData.accountHolderName,
-      bankname: formData.bankName, // ✅ FIXED
+      bankname: formData.bankName, 
     };
 
     const response = await editBankDetails(recordId, payload);

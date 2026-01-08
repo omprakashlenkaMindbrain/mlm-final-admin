@@ -10,7 +10,17 @@ const GenerateIncome = () => {
   const [toDate, setToDate] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const results = Array.isArray(data?.results) ? data.results : [];
+  const results = useMemo(() => {
+    if (!Array.isArray(data?.results)) return [];
+
+    return data.results.map((item) => ({
+      ...item.income,         
+      memId: item.memId,
+      planBV: item.planBV,
+      planName: item.planName,
+      userId: item.userId,
+    }));
+  }, [data]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -30,17 +40,16 @@ const GenerateIncome = () => {
   };
 
   const filteredResults = useMemo(() => {
-    return results.filter((user) => {
-      if (!user?.date) return false;
+    return results.filter((u) => {
+      if (!u?.date) return false;
 
-      const d = new Date(user.date);
+      const d = new Date(u.date);
       if (fromDate && d < new Date(fromDate)) return false;
       if (toDate && d > new Date(`${toDate}T23:59:59`)) return false;
 
       return true;
     });
   }, [results, fromDate, toDate]);
-
 
   const paginatedResults = filteredResults.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
@@ -61,8 +70,9 @@ const GenerateIncome = () => {
         <button
           onClick={generateIncome}
           disabled={loading}
-          className={`px-4 py-2 text-sm rounded-md text-white ${loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
-            }`}
+          className={`px-4 py-2 text-sm rounded-md text-white ${
+            loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
+          }`}
         >
           {loading ? "Generating..." : "Generate Income"}
         </button>
@@ -104,7 +114,9 @@ const GenerateIncome = () => {
       </div>
 
       {/* ERROR */}
-      {error && <p className="px-5 py-3 text-sm text-red-600">{error}</p>}
+      {error && (
+        <p className="px-5 py-3 text-sm text-red-600">{error}</p>
+      )}
 
       {/* TABLE */}
       <div className="overflow-x-auto">
@@ -129,24 +141,35 @@ const GenerateIncome = () => {
                 <tr key={i} className="hover:bg-slate-50">
                   <td className="px-5 py-3 font-medium">{u.name}</td>
                   <td className="px-5 py-3">{u.mob}</td>
-                  <td className="px-5 py-3 text-xs">{formatIST(u.date)}</td>
-                  <td className="px-5 py-3 text-right">{u.matchedBV}</td>
+                  <td className="px-5 py-3 text-xs">
+                    {formatIST(u.date)}
+                  </td>
+                  <td className="px-5 py-3 text-right">
+                    {u.matchedBV ?? 0}
+                  </td>
                   <td className="px-5 py-3 text-right text-green-600 font-semibold">
                     ₹{u.recentIncome ?? 0}
                   </td>
-                  <td className="px-5 py-3 text-right">₹{u.totalIncome}</td>
+                  <td className="px-5 py-3 text-right">
+                    ₹{u.totalIncome ?? 0}
+                  </td>
                   <td className="px-5 py-3 text-right">
                     {u.carryForward?.netlefttotal ?? 0}
                   </td>
                   <td className="px-5 py-3 text-right">
                     {u.carryForward?.netrighttotal ?? 0}
                   </td>
-                  <td className="px-5 py-3 text-xs">{u.message}</td>
+                  <td className="px-5 py-3 text-xs">
+                    {u.message}
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="9" className="px-5 py-6 text-center text-slate-400">
+                <td
+                  colSpan="9"
+                  className="px-5 py-6 text-center text-slate-400"
+                >
                   Click "Generate Income" to load data
                 </td>
               </tr>

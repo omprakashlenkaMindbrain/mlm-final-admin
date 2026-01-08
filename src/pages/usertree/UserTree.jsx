@@ -6,15 +6,13 @@ const UserTree = () => {
   const [treeData, setTreeData] = useState(null);
 
   useEffect(() => {
-    loadTree(); // load ROOT user
+    loadTree();
   }, []);
 
   const loadTree = async (memId) => {
     try {
       const res = await getShowJoinTree(memId);
 
-      // API RESPONSE SHAPE:
-      // { success, message, data: { user, leftUser, rightUser } }
       if (res?.data) {
         setTreeData(res.data);
       }
@@ -157,9 +155,6 @@ const UserTree = () => {
   );
 };
 
-/* =========================
-   NODE COMPONENT
-========================= */
 
 const Node = ({ member, onClick }) => {
   return (
@@ -186,10 +181,6 @@ const Node = ({ member, onClick }) => {
     </div>
   );
 };
-
-/* =========================
-   EMPTY NODE
-========================= */
 
 const EmptyNode = () => {
   return (
