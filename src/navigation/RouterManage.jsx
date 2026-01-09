@@ -1,19 +1,21 @@
 import {
+  Navigate,
   Route,
   BrowserRouter as Router,
   Routes,
   useLocation,
-  Navigate,
 } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { AuthProvider } from "../context/Authcontext";
 import { ProtectedRoute } from "../context/ProtectedRoute";
+import AccountComponent from "../pages/accountcomponent/AccountComponenet";
 import AdminLoginPage from "../pages/authentication/Login";
 import Dashboard from "../pages/dashboard/Dashboard";
 import IncomeJenerate from "../pages/incoomejenerate/IncomeJenerate";
 import Payout from "../pages/payout/Payout";
+import PayoutHistory from "../pages/payoutHistory/PayoutHistory";
 import UserTree from "../pages/usertree/UserTree";
-import AccountComponent from "../pages/accountcomponent/AccountComponenet";
+import AllUsers from "../pages/incomehistory/incomeHistory";
 
 function Layout() {
   const location = useLocation();
@@ -85,6 +87,23 @@ function Layout() {
               element={
                 <ProtectedRoute>
                   <UserTree />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/income-history"
+              element={
+                <ProtectedRoute>
+                  <AllUsers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/payout-history"
+              element={
+                <ProtectedRoute>
+                  <PayoutHistory />
                 </ProtectedRoute>
               }
             />

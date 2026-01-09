@@ -13,6 +13,7 @@ export default function Navbar({ closeSidebar }) {
     { name: "Income-Generate", path: "/income-generate" },
     { name: "Payout", path: "/payout" },
     { name: "Income Hiistory", path: "/income-history" },
+    { name: "Payout Hiistory", path: "/payout-history" },
 
 
   ];

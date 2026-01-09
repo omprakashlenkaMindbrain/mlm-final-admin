@@ -51,16 +51,17 @@ export function useUsers(initialPage = 1, initialLimit = 10) {
 
       const enrichedUsers = Array.isArray(json.data)
         ? json.data.map((item) => ({
-            ...item,
-            user: {
-              _id: item.userId?._id || item.user?._id || null,
-              name: item.userId?.name || "N/A",
-              email: item.userId?.email || "N/A",
-              mobno: item.userId?.mobno || "N/A",
-              memId: item.userId?.memId || "N/A",
-            },
-            originalUserId: item.userId,
-          }))
+          ...item,
+          user: {
+            _id: item.userId?._id || item.user?._id || null,
+            name: item.userId?.name || "N/A",
+            email: item.userId?.email || "N/A",
+            mobno: item.userId?.mobno || "N/A",
+            memId: item.userId?.memId || "N/A",
+            totalIncome: item.userId?.totalIncome || 0,
+          },
+          originalUserId: item.userId,
+        }))
         : [];
 
       setUsers(enrichedUsers);

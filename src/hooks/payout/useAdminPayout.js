@@ -25,6 +25,9 @@ export const useAdminPayout = () => {
 
       const json = await res.json();
 
+      console.log(json);
+      
+
       setData(Array.isArray(json.user) ? json.user : []);
     } catch (err) {
       setError(err.message || "Something went wrong");
