@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import * as XLSX from "xlsx";
-import { useAdminPayout } from "../../hooks/payout/useAdminPayout";
 import { usePostPayout } from "../../hooks/payout/postPayout";
+import { useAdminPayout } from "../../hooks/payout/useAdminPayout";
 
 const PayoutTable = () => {
   const { data = [], fetchPayoutUsers, loading, error } = useAdminPayout();
@@ -85,6 +85,8 @@ const PayoutTable = () => {
 
     try {
       const response = await postPayout(userIds);
+      console.log(response);
+      
 
       // Extract meaningful data from the payout response
       const { payoutUsers = [], autoCollection } = response;
@@ -97,19 +99,22 @@ const PayoutTable = () => {
 
         return {
           "S.No": index + 1,
-          "Member ID": mainUser.memId || "N/A",
           Name: mainUser.name || "N/A",
-          "Account Holder": payoutItem.account_holder_name || "N/A",
-          "Account Number": payoutItem.account_no || "N/A",
+          "Member ID": mainUser.memId || "N/A",
           "Total Income": mainUser.totalIncome || 0,
-          Withdrawn: mainUser.totalwithdrawincome || 0,
-          "Net Income (Before Payout)": mainUser.netincome || 0,
-          "Admin Charges (%)": autoCollection?.admincharges || 0,
           "TDS (%)": autoCollection?.tds || 0,
-          "Min Amount for Income": autoCollection?.minamountforincome || 0,
-          "Final Payable Amount": autoCollection?.income || 0, // This seems to be the processed amount
-          Status: "Payout Processed",
-          "Processed At": new Date().toLocaleString(),
+          "Admin Charges (%)": autoCollection?.admincharges || 0,
+          "Payable Amount": autoCollection?.income || 0, // This seems to be the processed amount
+          "Account Holder Name": payoutItem.account_holder_name || "N/A",
+          "Account Number": payoutItem.account_no || "N/A",
+          "IFSC Code": payoutItem.ifsc_code || "N/A",
+          "Branch Name": payoutItem.branch || "N/A",
+          "Bank Name": payoutItem.bank || "N/A",
+          // Withdrawn: mainUser.totalwithdrawincome || 0,
+          // "Net Income (Before Payout)": mainUser.netincome || 0,
+          // "Min Amount for Income": autoCollection?.minamountforincome || 0,
+          // Status: "Payout Processed",
+          "Payout Date": new Date().toLocaleString(),
         };
       }).filter(Boolean); // Remove any null entries
 
@@ -136,7 +141,7 @@ const PayoutTable = () => {
         { wch: 20 },  // Processed At
       ];
 
-      XLSX.writeFile(workbook, `payout_processed_${new Date().toISOString().slice(0,10)}.xlsx`);
+      XLSX.writeFile(workbook, `payout_processed_${new Date().toISOString().slice(0, 10)}.xlsx`);
 
       alert("Payout processed and exported successfully!");
 
@@ -225,14 +230,18 @@ const PayoutTable = () => {
               />
             </th>
             <th className="px-4 py-3 text-left">S.No</th>
-            <th className="px-4 py-3 text-left">Member ID</th>
             <th className="px-4 py-3 text-left">Name</th>
-            <th className="px-4 py-3 text-left">Account Holder</th>
-            <th className="px-4 py-3 text-left">Account No</th>
+            <th className="px-4 py-3 text-left">Member ID</th>
             <th className="px-4 py-3 text-right">Total Income</th>
-            <th className="px-4 py-3 text-right">Withdrawn</th>
-            <th className="px-4 py-3 text-right">Net Payable</th>
-            <th className="px-4 py-3 text-center">Status</th>
+            <th className="px-4 py-3 text-right">TDS %</th>
+            <th className="px-4 py-3 text-right">Admin Charges</th>
+            <th className="px-4 py-3 text-right">Payble Amount</th>
+            <th className="px-4 py-3 text-left">Account Holder Name</th>
+            <th className="px-4 py-3 text-left">Account No</th>
+            <th className="px-4 py-3 text-left">IFSC Code</th>
+            <th className="px-4 py-3 text-left">Branch Name</th>
+            {/* <th className="px-4 py-3 text-right">Withdrawn</th>
+            <th className="px-4 py-3 text-center">Status</th> */}
           </tr>
         </thead>
 
@@ -249,17 +258,23 @@ const PayoutTable = () => {
                   />
                 </td>
                 <td className="px-4 py-3 text-slate-500">{index + 1}</td>
-                <td className="px-4 py-3 font-semibold">{user.memId}</td>
                 <td className="px-4 py-3">{user.name}</td>
+                <td className="px-4 py-3 font-semibold">{user.memId}</td>
+                <td className="px-4 py-3 text-right">₹{user.netincome}</td>
+                <td className="px-4 py-3 text-right">5%</td>
+                <td className="px-4 py-3 text-right">₹{user.admincharges}</td>
+                <td className="px-4 py-3 text-right">₹{user.payoutAmount}</td>
                 <td className="px-4 py-3">{user.account_holder_name}</td>
                 <td className="px-4 py-3 font-mono">{user.account_no}</td>
-                <td className="px-4 py-3 text-right">₹{user.totalIncome}</td>
-                <td className="px-4 py-3 text-right text-red-600">₹{user.withdrawn}</td>
+                <td className="px-4 py-3 text-right text-red-600">{user.ifsc_code}</td>
                 <td className="px-4 py-3 text-right font-semibold text-green-700">
-                  ₹{user.netincome}
+                  {user.branch}
                 </td>
-                <td className="px-4 py-3 text-center text-xs font-semibold text-green-700">
-                  Eligible
+                <td className="px-4 py-3 text-right font-semibold text-green-700">
+                  {user.bank}
+                </td>
+                <td className="px-4 py-3 text-right font-semibold text-green-700">
+                  {user.Date}
                 </td>
               </tr>
             ))

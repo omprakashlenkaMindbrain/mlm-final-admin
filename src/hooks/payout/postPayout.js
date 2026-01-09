@@ -23,12 +23,14 @@ export const usePostPayout = () => {
       );
 
       const data = await response.json();
+      console.log(data);
+      
 
       if (!response.ok) {
         throw new Error(data.message || "Payout failed");
       }
 
-      return data; // ✅ RETURN RESPONSE
+      return data;
     } catch (err) {
       setError(err.message);
       throw err;

@@ -12,8 +12,8 @@ export default function Navbar({ closeSidebar }) {
     { name: "User-Tree", path: "/user-tree" },
     { name: "Income-Generate", path: "/income-generate" },
     { name: "Payout", path: "/payout" },
-    { name: "Income Hiistory", path: "/income-history" },
-    { name: "Payout Hiistory", path: "/payout-history" },
+    { name: "Income History", path: "/income-history" },
+    { name: "Payout History", path: "/payout-history" },
 
 
   ];
