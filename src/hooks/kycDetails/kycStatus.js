@@ -27,7 +27,6 @@ export const useKycAction = () => {
       );
 
       const json = await res.json();
-      console.log(json);
 
       if (!res.ok || !json.success) {
         throw new Error(json.message || "KYC update failed");
