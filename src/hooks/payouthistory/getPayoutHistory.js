@@ -30,6 +30,8 @@ export const useUserPayoutHistory = (userId) => {
         }
 
         const result = await res.json();
+        console.log(result);
+        
         setPayouts(result?.data || []);
       } catch (err) {
         setError(err.message || "Something went wrong");

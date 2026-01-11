@@ -1,6 +1,6 @@
 // src/components/admin/UsersTable.jsx
-import { useState } from "react";
 import { Mail, Phone } from "lucide-react";
+import { useState } from "react";
 import { useIncomeHistory } from "../../../hooks/incomehistory/incomeHistory";
 
 export default function UsersTable({ users, loading, error }) {
@@ -144,6 +144,7 @@ export default function UsersTable({ users, loading, error }) {
 /* ================= INCOME HISTORY MODAL (Unchanged - Clean & Modern) ================= */
 function IncomeHistoryModal({ user, onClose }) {
   const userId = user.user?._id;
+  
   const { incomeHistory, loadingIncome, errorIncome } = useIncomeHistory(userId);
 
   return (

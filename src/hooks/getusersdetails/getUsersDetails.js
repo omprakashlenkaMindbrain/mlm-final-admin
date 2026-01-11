@@ -44,6 +44,8 @@ export function useUsers(initialPage = 1, initialLimit = 10) {
       }
 
       const json = await res.json();
+      console.log(json);
+      
 
       if (!json?.success) {
         throw new Error(json?.message || "Failed to fetch users");

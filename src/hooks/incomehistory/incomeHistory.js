@@ -16,7 +16,7 @@ export function useIncomeHistory(userId) {
 
       try {
         const res = await fetch(
-          `${BASE_URL}/api/incomehistory/${userId}`, // ✅ FIXED
+          `${BASE_URL}/api/incomehistory/${userId}`,
           {
             method: "GET",
             credentials: "include",
@@ -35,6 +35,8 @@ export function useIncomeHistory(userId) {
         }
 
         const json = await res.json();
+        console.log(json);
+        
 
         if (!json?.success) {
           throw new Error(json?.message || "Failed to fetch income history");

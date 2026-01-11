@@ -1,11 +1,13 @@
 // src/pages/admin/PayoutHistory.jsx
-import { Mail, Phone, IndianRupee } from "lucide-react";
+import { IndianRupee, Mail, Phone } from "lucide-react";
 import { useState } from "react";
 import { useUsers } from "../../hooks/getusersdetails/getUsersDetails";
 import PayoutHistoryModal from "./components/PayoutHistoryModal";
 
 function PayoutHistory() {
   const { users, loadingUsers, errorUsers } = useUsers();
+  console.log(users);
+  
   const [selectedUser, setSelectedUser] = useState(null);
 
   return (
@@ -90,7 +92,7 @@ function PayoutHistory() {
                           <div className="flex items-center gap-2 text-slate-600">
                             <Phone className="w-4 h-4 text-slate-500" />
                             <span className="text-sm">
-                              {user.phone || "9999999999"}
+                              {user.mobno}
                             </span>
                           </div>
                         </td>

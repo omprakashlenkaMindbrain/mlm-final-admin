@@ -23,8 +23,7 @@ export const useGetKycDetails = (userId, enabled = false) => {
 
         const json = await res.json();
 
-        // 🔥 IMPORTANT FIX HERE
-        setKyc(json.data); // ONLY data, not full response
+        setKyc(json.data);
       } catch (err) {
         setError("Failed to load KYC details");
       } finally {
